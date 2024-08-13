@@ -1,0 +1,10 @@
+FROM openjdk:17-jdk-alpine
+WORKDIR /app
+COPY target/InsuranceJar.jar InsuranceJar.jar
+ENTRYPOINT ["java", "-jar", "InsuranceJar.jar"]
+
+#docker build -t InsuranceJar .
+#docker run -it InsuranceJar
+
+#docker run -it --entrypoint /bin/sh InsuranceJar
+#java -jar InsuranceJar.jar
