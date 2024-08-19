@@ -1,37 +1,35 @@
 package com.insurance.service;
 
-import com.insurance.impl.ClaimImpl;
 import com.insurance.models.Claim;
 import com.insurance.repository.ClaimRepository;
-import java.util.List;
 
+/**
+ * Service class for managing Claim operations.
+ */
 public class ClaimService {
-    public void manageClaims() {
-        ClaimImpl claimImpl = new ClaimImpl();
-        ClaimRepository claimRepository = new ClaimRepository();
+    private final ClaimRepository repository;
 
-        // Add all claims
-        List<Claim> claims = claimRepository.getSampleClaims();
-        claimImpl.addAllClaims(claims);
+    public ClaimService(ClaimRepository repository) {
+        this.repository = repository;
+    }
 
-        // Read a claim
-        Claim claim = claimImpl.getClaim("CL001");
-        System.out.println("Claim Details: ");
-        System.out.println("Status: " + claim.getStatus() + ", Policy ID: " + claim.getPolicyId());
+    public void addClaim(Claim claim) {
+        repository.addClaim(claim);
+    }
 
-        // Update a claim
-        claim.setStatus("Approved");
-        claimImpl.updateClaim("CL001", claim);
-        System.out.println("Updated Claim Details: ");
-        System.out.println("Status: " + claim.getStatus() + ", Policy ID: " + claim.getPolicyId());
+    public Claim getClaim(String claimId) {
+        return repository.getClaimById(claimId);
+    }
 
-        // Delete a claim
-        claimImpl.deleteClaim("CL002");
+    public void updateClaim(Claim claim) {
+        repository.updateClaim(claim);
+    }
 
-        // Display all remaining claims
-        System.out.println("Remaining Claims: ");
-        for (Claim remainingClaim : claimImpl.getClaims().values()) {
-            System.out.println("Claim ID: " + remainingClaim.getClaimId() + ", Status: " + remainingClaim.getStatus());
-        }
+    public void deleteClaim(String claimId) {
+        repository.deleteClaim(claimId);
+    }
+
+    public void printAllClaims() {
+        repository.getAllClaims().forEach(System.out::println);
     }
 }

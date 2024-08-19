@@ -2,12 +2,13 @@ package com.insurance.intf;
 
 import com.insurance.models.CustomerDetails;
 
-import java.util.List;
-
+/**
+ * Interface for CustomerDetails operations.
+ */
 public interface CustomerDetailsIntf {
-    void addCustomer(CustomerDetails customer);
-    void addAllCustomers(List<CustomerDetails> customers);
-    CustomerDetails getCustomer(String customerId);
-    void updateCustomer(String customerId, CustomerDetails customer);
-    void deleteCustomer(String customerId);
+    void addCustomerDetails(CustomerDetails customerDetails);
+    CustomerDetails getCustomerDetails(String customerId);
+    void updateCustomerDetails(CustomerDetails customerDetails);
+    void deleteCustomerDetails(String customerId);
+    void printAllCustomerDetails();
 }

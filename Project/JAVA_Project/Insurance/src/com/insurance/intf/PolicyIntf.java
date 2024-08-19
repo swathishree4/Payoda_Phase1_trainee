@@ -1,12 +1,14 @@
 package com.insurance.intf;
 
 import com.insurance.models.Policy;
-import java.util.List;
 
+/**
+ * Interface for Policy operations.
+ */
 public interface PolicyIntf {
     void addPolicy(Policy policy);
-    void addAllPolicies(List<Policy> policies);
     Policy getPolicy(String policyId);
-    void updatePolicy(String policyId, Policy policy);
+    void updatePolicy(Policy policy);
     void deletePolicy(String policyId);
+    void printAllPolicies();
 }

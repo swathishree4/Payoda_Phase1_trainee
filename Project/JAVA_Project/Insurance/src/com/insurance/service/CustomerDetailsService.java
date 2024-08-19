@@ -1,38 +1,35 @@
 package com.insurance.service;
 
-import com.insurance.impl.CustomerDetailsImpl;
 import com.insurance.models.CustomerDetails;
 import com.insurance.repository.CustomerDetailsRepository;
 
-import java.util.List;
-
+/**
+ * Service class for managing CustomerDetails operations.
+ */
 public class CustomerDetailsService {
-    public void manageCustomers() {
-        CustomerDetailsImpl customerImpl = new CustomerDetailsImpl();
-        CustomerDetailsRepository customerRepository = new CustomerDetailsRepository();
+    private final CustomerDetailsRepository repository;
 
-        // Add all customers
-        List<CustomerDetails> customers = customerRepository.getSampleCustomers();
-        customerImpl.addAllCustomers(customers);
+    public CustomerDetailsService(CustomerDetailsRepository repository) {
+        this.repository = repository;
+    }
 
-        // Read a customer
-        CustomerDetails customer = customerImpl.getCustomer("C001");
-        System.out.println("Customer Details: ");
-        System.out.println("Name: " + customer.getName() + ", Address: " + customer.getAddress());
+    public void addCustomerDetails(CustomerDetails customerDetails) {
+        repository.addCustomerDetails(customerDetails);
+    }
 
-        // Update a customer
-        customer.setContactNumber("555-9999");
-        customerImpl.updateCustomer("C001", customer);
-        System.out.println("Updated Customer Details: ");
-        System.out.println("Name: " + customer.getName() + ", Contact Number: " + customer.getContactNumber());
+    public CustomerDetails getCustomerDetails(String customerId) {
+        return repository.getCustomerDetailsById(customerId);
+    }
 
-        // Delete a customer
-        customerImpl.deleteCustomer("C002");
+    public void updateCustomerDetails(CustomerDetails customerDetails) {
+        repository.updateCustomerDetails(customerDetails);
+    }
 
-        // Display all remaining customers
-        System.out.println("Remaining Customers: ");
-        for (CustomerDetails remainingCustomer : customerImpl.getCustomers().values()) {
-            System.out.println("Customer ID: " + remainingCustomer.getCustomerId() + ", Name: " + remainingCustomer.getName());
-        }
+    public void deleteCustomerDetails(String customerId) {
+        repository.deleteCustomerDetails(customerId);
+    }
+
+    public void printAllCustomerDetails() {
+        repository.getAllCustomerDetails().forEach(System.out::println);
     }
 }

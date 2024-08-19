@@ -2,45 +2,40 @@ package com.insurance.impl;
 
 import com.insurance.intf.ClaimIntf;
 import com.insurance.models.Claim;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.insurance.repository.ClaimRepository;
 
+/**
+ * Implementation of ClaimIntf.
+ */
 public class ClaimImpl implements ClaimIntf {
-    private Map<String, Claim> claims = new HashMap<>();
+    private final ClaimRepository repository;
 
-    @Override
-    public void addClaim(Claim claim) {
-        claims.put(claim.getClaimId(), claim);
+    public ClaimImpl(ClaimRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public void addAllClaims(List<Claim> claimsList) {
-        for (Claim claim : claimsList) {
-            claims.put(claim.getClaimId(), claim);
-        }
+    public void addClaim(Claim claim) {
+        repository.addClaim(claim);
     }
 
     @Override
     public Claim getClaim(String claimId) {
-        return claims.get(claimId);
+        return repository.getClaimById(claimId);
     }
 
     @Override
-    public void updateClaim(String claimId, Claim claim) {
-        claims.put(claimId, claim);
+    public void updateClaim(Claim claim) {
+        repository.updateClaim(claim);
     }
 
     @Override
     public void deleteClaim(String claimId) {
-        claims.remove(claimId);
+        repository.deleteClaim(claimId);
     }
 
-	public Map<String, Claim> getClaims() {
-		return claims;
-	}
-
-	public void setClaims(Map<String, Claim> claims) {
-		this.claims = claims;
-	}
+    @Override
+    public void printAllClaims() {
+        repository.getAllClaims().forEach(System.out::println);
+    }
 }

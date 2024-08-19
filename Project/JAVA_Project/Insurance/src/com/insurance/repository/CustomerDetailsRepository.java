@@ -1,15 +1,31 @@
 package com.insurance.repository;
 
 import com.insurance.models.CustomerDetails;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Repository for managing CustomerDetails data.
+ */
 public class CustomerDetailsRepository {
-    public List<CustomerDetails> getSampleCustomers() {
-        List<CustomerDetails> customers = new ArrayList<>();
-        customers.add(new CustomerDetails("C001", "Alice Brown", "123 Main St", "555-1234"));
-        customers.add(new CustomerDetails("C002", "Bob White", "456 Oak St", "555-5678"));
-        return customers;
+    private Map<String, CustomerDetails> customerDetailsMap = new HashMap<>();
+
+    public void addCustomerDetails(CustomerDetails customerDetails) {
+        customerDetailsMap.put(customerDetails.getCustomerId(), customerDetails);
+    }
+
+    public CustomerDetails getCustomerDetailsById(String customerId) {
+        return customerDetailsMap.get(customerId);
+    }
+
+    public void updateCustomerDetails(CustomerDetails customerDetails) {
+        customerDetailsMap.put(customerDetails.getCustomerId(), customerDetails);
+    }
+
+    public void deleteCustomerDetails(String customerId) {
+        customerDetailsMap.remove(customerId);
+    }
+
+    public Collection<CustomerDetails> getAllCustomerDetails() {
+        return customerDetailsMap.values();
     }
 }

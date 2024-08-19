@@ -1,14 +1,31 @@
 package com.insurance.repository;
 
 import com.insurance.models.Policy;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+/**
+ * Repository for managing Policy data.
+ */
 public class PolicyRepository {
-    public List<Policy> getSamplePolicies() {
-        List<Policy> policies = new ArrayList<>();
-        policies.add(new Policy("PL001", "C001", "Health"));
-        policies.add(new Policy("PL002", "C002", "Auto"));
-        return policies;
+    private Map<String, Policy> policyMap = new HashMap<>();
+
+    public void addPolicy(Policy policy) {
+        policyMap.put(policy.getPolicyId(), policy);
+    }
+
+    public Policy getPolicyById(String policyId) {
+        return policyMap.get(policyId);
+    }
+
+    public void updatePolicy(Policy policy) {
+        policyMap.put(policy.getPolicyId(), policy);
+    }
+
+    public void deletePolicy(String policyId) {
+        policyMap.remove(policyId);
+    }
+
+    public Collection<Policy> getAllPolicies() {
+        return policyMap.values();
     }
 }

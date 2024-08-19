@@ -2,46 +2,40 @@ package com.insurance.impl;
 
 import com.insurance.intf.PaymentIntf;
 import com.insurance.models.Payment;
+import com.insurance.repository.PaymentRepository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+/**
+ * Implementation of PaymentIntf.
+ */
 public class PaymentImpl implements PaymentIntf {
-    private Map<String, Payment> payments = new HashMap<>();
+    private final PaymentRepository repository;
 
-    @Override
-    public void addPayment(Payment payment) {
-        payments.put(payment.getPaymentId(), payment);
+    public PaymentImpl(PaymentRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public void addAllPayments(List<Payment> paymentsList) {
-        for (Payment payment : paymentsList) {
-            payments.put(payment.getPaymentId(), payment);
-        }
+    public void addPayment(Payment payment) {
+        repository.addPayment(payment);
     }
 
     @Override
     public Payment getPayment(String paymentId) {
-        return payments.get(paymentId);
+        return repository.getPaymentById(paymentId);
     }
 
     @Override
-    public void updatePayment(String paymentId, Payment payment) {
-        payments.put(paymentId, payment);
+    public void updatePayment(Payment payment) {
+        repository.updatePayment(payment);
     }
 
     @Override
     public void deletePayment(String paymentId) {
-        payments.remove(paymentId);
+        repository.deletePayment(paymentId);
     }
 
-	public Map<String, Payment> getPayments() {
-		return payments;
-	}
-
-	public void setPayments(Map<String, Payment> payments) {
-		this.payments = payments;
-	}
+    @Override
+    public void printAllPayments() {
+        repository.getAllPayments().forEach(System.out::println);
+    }
 }

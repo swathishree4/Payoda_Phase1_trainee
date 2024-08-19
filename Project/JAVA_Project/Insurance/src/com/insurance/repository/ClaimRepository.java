@@ -1,14 +1,31 @@
 package com.insurance.repository;
 
 import com.insurance.models.Claim;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+/**
+ * Repository for managing Claim data.
+ */
 public class ClaimRepository {
-    public List<Claim> getSampleClaims() {
-        List<Claim> claims = new ArrayList<>();
-        claims.add(new Claim("CL001", "PL001", "Pending"));
-        claims.add(new Claim("CL002", "PL002", "Approved"));
-        return claims;
+    private Map<String, Claim> claimMap = new HashMap<>();
+
+    public void addClaim(Claim claim) {
+        claimMap.put(claim.getClaimId(), claim);
+    }
+
+    public Claim getClaimById(String claimId) {
+        return claimMap.get(claimId);
+    }
+
+    public void updateClaim(Claim claim) {
+        claimMap.put(claim.getClaimId(), claim);
+    }
+
+    public void deleteClaim(String claimId) {
+        claimMap.remove(claimId);
+    }
+
+    public Collection<Claim> getAllClaims() {
+        return claimMap.values();
     }
 }

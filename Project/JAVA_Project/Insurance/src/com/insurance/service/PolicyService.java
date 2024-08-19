@@ -1,37 +1,35 @@
 package com.insurance.service;
 
-import com.insurance.impl.PolicyImpl;
 import com.insurance.models.Policy;
 import com.insurance.repository.PolicyRepository;
-import java.util.List;
 
+/**
+ * Service class for managing Policy operations.
+ */
 public class PolicyService {
-    public void managePolicies() {
-        PolicyImpl policyImpl = new PolicyImpl();
-        PolicyRepository policyRepository = new PolicyRepository();
+    private final PolicyRepository repository;
 
-        // Add all policies
-        List<Policy> policies = policyRepository.getSamplePolicies();
-        policyImpl.addAllPolicies(policies);
+    public PolicyService(PolicyRepository repository) {
+        this.repository = repository;
+    }
 
-        // Read a policy
-        Policy policy = policyImpl.getPolicy("PL001");
-        System.out.println("Policy Details: ");
-        System.out.println("Policy Type: " + policy.getPolicyType() + ", Customer ID: " + policy.getCustomerId());
+    public void addPolicy(Policy policy) {
+        repository.addPolicy(policy);
+    }
 
-        // Update a policy
-        policy.setPolicyType("Life");
-        policyImpl.updatePolicy("PL001", policy);
-        System.out.println("Updated Policy Details: ");
-        System.out.println("Policy Type: " + policy.getPolicyType() + ", Customer ID: " + policy.getCustomerId());
+    public Policy getPolicy(String policyId) {
+        return repository.getPolicyById(policyId);
+    }
 
-        // Delete a policy
-        policyImpl.deletePolicy("PL002");
+    public void updatePolicy(Policy policy) {
+        repository.updatePolicy(policy);
+    }
 
-        // Display all remaining policies
-        System.out.println("Remaining Policies: ");
-        for (Policy remainingPolicy : policyImpl.getPolicies().values()) {
-            System.out.println("Policy ID: " + remainingPolicy.getPolicyId() + ", Policy Type: " + remainingPolicy.getPolicyType());
-        }
+    public void deletePolicy(String policyId) {
+        repository.deletePolicy(policyId);
+    }
+
+    public void printAllPolicies() {
+        repository.getAllPolicies().forEach(System.out::println);
     }
 }

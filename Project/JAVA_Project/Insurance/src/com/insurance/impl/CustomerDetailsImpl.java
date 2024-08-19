@@ -2,46 +2,40 @@ package com.insurance.impl;
 
 import com.insurance.intf.CustomerDetailsIntf;
 import com.insurance.models.CustomerDetails;
+import com.insurance.repository.CustomerDetailsRepository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+/**
+ * Implementation of CustomerDetailsIntf.
+ */
 public class CustomerDetailsImpl implements CustomerDetailsIntf {
-    private Map<String, CustomerDetails> customers = new HashMap<>();
+    private final CustomerDetailsRepository repository;
 
-    @Override
-    public void addCustomer(CustomerDetails customer) {
-        customers.put(customer.getCustomerId(), customer);
+    public CustomerDetailsImpl(CustomerDetailsRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public void addAllCustomers(List<CustomerDetails> customersList) {
-        for (CustomerDetails customer : customersList) {
-            customers.put(customer.getCustomerId(), customer);
-        }
+    public void addCustomerDetails(CustomerDetails customerDetails) {
+        repository.addCustomerDetails(customerDetails);
     }
 
     @Override
-    public CustomerDetails getCustomer(String customerId) {
-        return customers.get(customerId);
+    public CustomerDetails getCustomerDetails(String customerId) {
+        return repository.getCustomerDetailsById(customerId);
     }
 
     @Override
-    public void updateCustomer(String customerId, CustomerDetails customer) {
-        customers.put(customerId, customer);
+    public void updateCustomerDetails(CustomerDetails customerDetails) {
+        repository.updateCustomerDetails(customerDetails);
     }
 
     @Override
-    public void deleteCustomer(String customerId) {
-        customers.remove(customerId);
+    public void deleteCustomerDetails(String customerId) {
+        repository.deleteCustomerDetails(customerId);
     }
 
-	public Map<String, CustomerDetails> getCustomers() {
-		return customers;
-	}
-
-	public void setCustomers(Map<String, CustomerDetails> customers) {
-		this.customers = customers;
-	}
+    @Override
+    public void printAllCustomerDetails() {
+        repository.getAllCustomerDetails().forEach(System.out::println);
+    }
 }

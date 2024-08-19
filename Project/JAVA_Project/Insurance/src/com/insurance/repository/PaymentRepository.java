@@ -1,15 +1,31 @@
 package com.insurance.repository;
 
 import com.insurance.models.Payment;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Repository for managing Payment data.
+ */
 public class PaymentRepository {
-    public List<Payment> getSamplePayments() {
-        List<Payment> payments = new ArrayList<>();
-        payments.add(new Payment("P001", "C001", 200.00, "2024-08-01"));
-        payments.add(new Payment("P002", "C002", 300.00, "2024-08-02"));
-        return payments;
+    private Map<String, Payment> paymentMap = new HashMap<>();
+
+    public void addPayment(Payment payment) {
+        paymentMap.put(payment.getPaymentId(), payment);
+    }
+
+    public Payment getPaymentById(String paymentId) {
+        return paymentMap.get(paymentId);
+    }
+
+    public void updatePayment(Payment payment) {
+        paymentMap.put(payment.getPaymentId(), payment);
+    }
+
+    public void deletePayment(String paymentId) {
+        paymentMap.remove(paymentId);
+    }
+
+    public Collection<Payment> getAllPayments() {
+        return paymentMap.values();
     }
 }
